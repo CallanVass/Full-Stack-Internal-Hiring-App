@@ -48,6 +48,9 @@ console.log('Deleted users')
 const db_users = await UserModel.insertMany(users)
 console.log('Added users')
 
+console.log(users)
+console.log(db_users)
+
 const listings = [
     {
         "title": "Web Developer",
@@ -95,7 +98,7 @@ const listings = [
         "datePosted": "2024-01-05",
         "dateClosing": "2024-01-20",
         "newListing": false,
-        "applicants": "",
+        "applicants": db_users[3],
         "creator" : db_users[0]
     },
 ]
