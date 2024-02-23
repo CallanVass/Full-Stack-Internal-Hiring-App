@@ -1,0 +1,1 @@
+// Job listing schema goes here
