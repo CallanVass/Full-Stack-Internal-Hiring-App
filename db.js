@@ -25,7 +25,7 @@ const usersSchema = new mongoose.Schema({
     department: { type: String , required: true },
     admin: { type: Boolean, required: true },
     aboutMe: { type: Object, required: false }, // Object with key-value pairs: headline, career_goals, tags etc
-    applications: {type: mongoose.objectId, ref: 'Listing'}
+    applications: {type: mongoose.ObjectId, ref: 'Listing'}
 })
 
 const UserModel = mongoose.model('User', usersSchema)
@@ -43,8 +43,8 @@ const listingsSchema = new mongoose.Schema({
     dateClosing: { type: Date, required: true },
     newListing: { type: Boolean, required: true, default: true},
     listingStatus: { type: String, required: true, default: 'Active'},
-    applicants: {type: mongoose.objectId, ref: 'User'},
-    creator : {type: mongoose.objectId, ref: 'User'}
+    applicants: {type: mongoose.ObjectId, ref: 'User'},
+    creator : {type: mongoose.ObjectId, ref: 'User'}
 
 })
 
