@@ -8,7 +8,7 @@ const router = Router()
 // Get all users
 router.get('/', async (req, res) => {
   try {
-    const users = await UserModel.find({})
+    const users = await UserModel.find().populate('applications')
     res.status(200).send(users)
   } catch (error) {
     res.status(500).send(error)
