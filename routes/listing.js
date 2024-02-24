@@ -31,7 +31,47 @@ router.get('/:id', async (req, res) => {
   }
 })
 
+// Create new listing
+router.post('/', async (req, res) => {
+  try {
+    // Applicants not required for a new job listing
+    const newListing = await (await ListingModel.create(req.body)).populate('creator')
+    res.status(201).send(newListing)
+  } catch (error) {
+    res.status(400).send(error)
+  }
+})
 
+// Update a listing by ID using PUT
+router.put('/:id', async (req, res) => {
+  try {
+    // Creator not required as this is not amendable
+    const updatedListing = (await (await ListingModel.findByIdAndUpdate(req.params.id, req.body, {new : true})).populate('applicants'))
+    if (updatedListing) {
+      res.status(200).send(updatedListing)
+    } else {
+      res.status(404).send({error: 'Listing not found'})
+    }
+  } catch (error) {
+    res.status(400).send({error: error.message})
+  }
+})
+
+
+// Delete a listing by ID
+router.delete('/:id', async (req, res) => {
+  try {
+    // Creator not required as this is not amendable
+    const deletedListing = await ListingModel.findByIdAndDelete(req.params.id)
+    if (deletedListing) {
+      res.sendStatus(204)
+    } else {
+      res.status(404).send({error: 'Listing not found'})
+    }
+  } catch (error) {
+    res.status(500).send({error: error.message})
+  }
+})
 
 
 export default router
