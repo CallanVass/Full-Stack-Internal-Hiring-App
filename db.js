@@ -25,7 +25,12 @@ const usersSchema = new mongoose.Schema({
     department: { type: String , required: true },
     admin: { type: Boolean, default:  false },
     aboutMe: { type: Object, required: false }, // Object with key-value pairs: headline, career_goals, tags etc
-    applications: {type: mongoose.ObjectId, ref: 'Listing'}
+    applications: [
+        {
+            type: mongoose.ObjectId,
+            ref: 'Listing'
+        }
+    ]
 })
 
 const UserModel = mongoose.model('User', usersSchema)
@@ -43,12 +48,22 @@ const listingsSchema = new mongoose.Schema({
     dateClosing: { type: Date, required: true },
     newListing: { type: Boolean, required: true, default: true},
     listingStatus: { type: String, required: true, default: 'Active'}, // Active, Inactive, Closed, Filled
-    applicants: {type: [mongoose.ObjectId], ref: 'User'},
+    applicants: [
+        {
+            type: mongoose.ObjectId,
+            ref: 'User'
+        }
+    ],
     creator: {type: mongoose.ObjectId, ref: 'User'}
 
 })
 
 const ListingModel = mongoose.model('Listing', listingsSchema)
+
+// Function to push a new listing to a user's applications array
+function addApplicationToUser (userId, listing) {
+    return 
+}
 
 
 export { closeConnection, UserModel, ListingModel }

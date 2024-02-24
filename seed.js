@@ -48,8 +48,7 @@ console.log('Deleted users')
 const db_users = await UserModel.insertMany(users)
 console.log('Added users')
 
-console.log(users)
-console.log(db_users)
+// console.log(users)
 
 const listings = [
     {
@@ -65,7 +64,7 @@ const listings = [
         "roleDuration": "Contract",
         "datePosted": "2024-02-10",
         "dateClosing": "2024-02-29",
-        "applicants": db_users[2],
+        "applicants": [db_users[2]],
         "creator" :  db_users[0]
     },
     {
@@ -81,7 +80,7 @@ const listings = [
         "salary": "120000",
         "datePosted": "2024-02-10",
         "dateClosing": "2024-02-29",
-        "applicants": db_users[3],
+        "applicants": [db_users[3], db_users[2]],
         "creator" : db_users[0]
     },
     {
@@ -98,7 +97,7 @@ const listings = [
         "datePosted": "2024-01-05",
         "dateClosing": "2024-01-20",
         "newListing": false,
-        "applicants": db_users[3],
+        "applicants": [db_users[3]],
         "creator" : db_users[0]
     },
     {
@@ -123,5 +122,7 @@ console.log('Deleted listings')
 await ListingModel.insertMany(listings)
 console.log('Added users')
 
+console.log(listings)
+console.log(db_users)
 
 closeConnection()
