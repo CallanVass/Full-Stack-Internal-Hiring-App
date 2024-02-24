@@ -29,7 +29,7 @@ const usersSchema = new mongoose.Schema({
         {
             type: mongoose.ObjectId,
             ref: 'Listing'
-        }
+        } // Only visible to user / admin
     ]
 })
 
@@ -52,7 +52,7 @@ const listingsSchema = new mongoose.Schema({
         {
             type: mongoose.ObjectId,
             ref: 'User'
-        }
+        } // Only visible to creator / admin
     ],
     creator: {type: mongoose.ObjectId, ref: 'User'}
 
@@ -61,9 +61,9 @@ const listingsSchema = new mongoose.Schema({
 const ListingModel = mongoose.model('Listing', listingsSchema)
 
 // Function to push a new listing to a user's applications array
-function addApplicationToUser (userId, listing) {
-    return 
-}
+// function addApplicationToUser (userId, listing) {
+//     return
+// }
 
 
 export { closeConnection, UserModel, ListingModel }
