@@ -1,12 +1,13 @@
 import { Router } from "express"
 import bcrypt from 'bcrypt'
 import { UserModel } from '../db.js'
+import auth from '../auth.js'
 
 const router = Router()
 // PATHING FOR ROUTES: http://localhost:8003/users
 
-// Get all users
-router.get('/', async (req, res) => {
+// Get all users (AUTH REQUIRED)
+router.get('/', auth, async (req, res) => {
   try {
     const users = await UserModel.find().populate('applications')
     res.status(200).send(users)
@@ -15,8 +16,8 @@ router.get('/', async (req, res) => {
   }
 })
 
-// Get a single user by ID
-router.get('/:id', async (req, res) => {
+// Get a single user by ID (AUTH REQUIRED)
+router.get('/:id', auth, async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.id)
     if (!user) {
@@ -29,8 +30,8 @@ router.get('/:id', async (req, res) => {
 })
 
 
-// Create a new user
-router.post('/', async (req, res) => {
+// Create a new user (AUTH REQUIRED)
+router.post('/', auth, async (req, res) => {
   try {
     // Hash the password before saving
     const hashedPassword = await bcrypt.hash(req.body.password, 8)
@@ -46,8 +47,8 @@ router.post('/', async (req, res) => {
 })
 
 
-// Update a user by ID using PUT
-router.put('/:id', async (req, res) => {
+// Update a user by ID using PUT (AUTH REQUIRED)
+router.put('/:id', auth, async (req, res) => {
   const updates = Object.keys(req.body)
   const allowedUpdates = ['firstName', 'lastName', 'email', 'password', 'role', 'department', 'admin', 'aboutMe', 'applications']
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
@@ -75,8 +76,8 @@ router.put('/:id', async (req, res) => {
   }
 })
 
-// Delete a user by ID
-router.delete('/:id', async (req, res) => {
+// Delete a user by ID (AUTH REQUIRED)
+router.delete('/:id', auth, async (req, res) => {
   try {
     const user = await UserModel.findByIdAndDelete(req.params.id)
     if (!user) {
