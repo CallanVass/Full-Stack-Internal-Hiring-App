@@ -55,7 +55,7 @@ const listings = [
     {
         "title": "Web Developer",
         "description": {
-            "points": ["Job point 1", "Job point 2", "Job point 3", "Job point 4"],
+            "points": ["Job point 1", "Job point 2", "Job point 3"],
             "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias laudantium, aut distinctio impedit esse eos unde, quasi voluptates officiis rem ex iste nemo debitis soluta ut earum! Sed numquam doloremque quo magnam ullam? Rem quod vel repellendus fugit beatae quaerat."
         },
         "department": "IT",
@@ -71,7 +71,7 @@ const listings = [
     {
         "title": "Marketing Manager",
         "description": {
-            "points": ["Job point 1", "Job point 2", "Job point 3", "Job point 4"],
+            "points": ["Job point 1", "Job point 2", "Job point 3"],
             "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias laudantium, aut distinctio impedit esse eos unde, quasi voluptates officiis rem ex iste nemo debitis soluta ut earum! Sed numquam doloremque quo magnam ullam? Rem quod vel repellendus fugit beatae quaerat."
         },
         "department": "Marketing",
@@ -87,7 +87,7 @@ const listings = [
     {
         "title": "Data Analyst",
         "description": {
-            "points": ["Job point 1", "Job point 2", "Job point 3", "Job point 4"],
+            "points": ["Job point 1", "Job point 2", "Job point 3"],
             "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias laudantium, aut distinctio impedit esse eos unde, quasi voluptates officiis rem ex iste nemo debitis soluta ut earum! Sed numquam doloremque quo magnam ullam? Rem quod vel repellendus fugit beatae quaerat."
         },
         "department": "Strategy",
@@ -101,6 +101,21 @@ const listings = [
         "applicants": db_users[3],
         "creator" : db_users[0]
     },
+    {
+        "title": "Administrator",
+        "description": {
+            "points": ["Great opportunity to join the data team", "Develop new processes", "Collaborate with internal and external teams"],
+            "text": "The successful candidate will provide administrative support, greet and direct visitors and answer and respond to calls and emails. Qualified candidates will have impeccable verbal and written communication skills, a strong ability to multitask and a friendly demeanour."
+        },
+        "department": "Data",
+        "location": "On Site",
+        "salary": "70000",
+        "roleType": "Full-time",
+        "roleDuration": "Permanent",
+        "datePosted": "2024-02-24",
+        "dateClosing": "2024-03-04",
+        "creator": db_users[0]
+    }
 ]
 
 await ListingModel.deleteMany()

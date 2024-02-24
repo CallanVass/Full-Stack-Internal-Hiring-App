@@ -23,7 +23,7 @@ const usersSchema = new mongoose.Schema({
     password: { type: String, required: true },
     role: { type: String, required: true },
     department: { type: String , required: true },
-    admin: { type: Boolean, required: true },
+    admin: { type: Boolean, default:  false },
     aboutMe: { type: Object, required: false }, // Object with key-value pairs: headline, career_goals, tags etc
     applications: {type: mongoose.ObjectId, ref: 'Listing'}
 })
@@ -42,9 +42,9 @@ const listingsSchema = new mongoose.Schema({
     datePosted: { type: Date, required: true },
     dateClosing: { type: Date, required: true },
     newListing: { type: Boolean, required: true, default: true},
-    listingStatus: { type: String, required: true, default: 'Active'},
-    applicants: {type: mongoose.ObjectId, ref: 'User'},
-    creator : {type: mongoose.ObjectId, ref: 'User'}
+    listingStatus: { type: String, required: true, default: 'Active'}, // Active, Inactive, Closed, Filled
+    applicants: {type: [mongoose.ObjectId], ref: 'User'},
+    creator: {type: mongoose.ObjectId, ref: 'User'}
 
 })
 
