@@ -1,7 +1,8 @@
 import express from 'express'
 import cors from 'cors'
-import userRoutes from './routes/user_search.js'
+import userRoutes from './routes/userSearch.js'
 import listingRoutes from './routes/listing.js'
+import loginRoutes from './routes/login.js'
 
 // Defining app instance
 const app = express()
@@ -19,6 +20,9 @@ app.use('/users', userRoutes)
 
 // Middleware for listings routes
 app.use('/listings', listingRoutes)
+
+// Middleware for login routes
+app.use('/login', loginRoutes)
 
 // Default route i.e. login page - is this necessary?
 app.get('/', (req, res) => res.send({info: "Talent Forge API"}))
