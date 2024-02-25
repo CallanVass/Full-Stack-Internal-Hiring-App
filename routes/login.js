@@ -23,15 +23,26 @@ router.post('/', async (req, res) => {
           )
 
         // Send the JWT to the client
-        res.send({ token })
+        res.status(200).send({ token })
+        console.log(res)
+
       // }
       } else {
         res.status(401).send({message: 'Invalid credentials'})
+        // res.sendStatus(401).send({message: 'Invalid credentials'})
+        console.log(res)
+        // res.send({message: 'Invalid credentials'})
+
 
     }
 
   } catch (error) {
-      res.status(500).send({message: error.message})
+      res.status(500).send({message: 'Invalid credentials'})
+      // res.sendStatus(500).send({message: error.message})
+      // res.status(500)
+      console.log(res)
+      return res
+
   }
 })
 
