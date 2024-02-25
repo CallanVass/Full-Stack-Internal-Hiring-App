@@ -14,27 +14,36 @@ router.post('/', async (req, res) => {
     const user = await UserModel.findOne({ email })
 
     if (!user) {
-      return res.status(404).send('User not found')
+      return res.status(404)
+
     }
 
     // Compare submitted password with the user's hashed password
     const isMatch = await bcrypt.compare(password, user.password)
 
     if (!isMatch) {
-      return res.status(401).send('Invalid credentials')
+      console.log('Not a match')
+      // return res.status(401).send('Invalid credentials')
+      return res.status(401)
+
     }
 
     // Generate a JWT
     const token = jwt.sign(
       { _id: user._id.toString() },
-      process.env.SECRET_KEY, 
-      { expiresIn: '1h' } // Token expiration time
+      process.env.SECRET_KEY,
+      { expiresIn: '7 days' } // Token expiration time - ** UPDATE to 1 hour for production **
     )
+    console.log('Token generated')
 
     // Send the JWT to the client
     res.send({ token })
   } catch (error) {
-    res.status(500).send('Server error')
+    console.log('Server error')
+
+    // res.status(500).send('Server error')
+    res.status(500).send(error.message)
+
   }
 })
 
