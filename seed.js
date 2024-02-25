@@ -1,21 +1,22 @@
 // File for seeding profile data, login data, and
+import bcrypt from 'bcrypt'
 import { closeConnection, UserModel, ListingModel } from "./db.js"
 
 const users = [
     {
         "firstName": "Adam",
-        "lastName": "Administration",
+        "lastName": "Andrews",
         "email": "adam@email.com",
-        "password": "password",
+        "password": await bcrypt.hash("fishing", 8),
         "role": "Recruitment Manager",
         "department": "Human Resources",
         "admin": true,
     },
     {
         "firstName": "Betty",
-        "lastName": "Business",
+        "lastName": "Bailey",
         "email": "betty@email.com",
-        "password": "password",
+        "password": await bcrypt.hash("castle", 8),
         "role": "HR Specialist",
         "department": "Human Resources",
         "admin": false,
@@ -23,9 +24,9 @@ const users = [
     },
     {
         "firstName": "Charlie",
-        "lastName": "Candidate",
+        "lastName": "Castleton",
         "email": "charlie@email.com",
-        "password": "password",
+        "password": await bcrypt.hash("empire", 8),
         "role": "Software Engineer",
         "department": "IT",
         "admin": false,
@@ -33,9 +34,9 @@ const users = [
     },
     {
         "firstName": "David",
-        "lastName": "Developer",
+        "lastName": "Denley",
         "email": "david@email.com",
-        "password": "password",
+        "password": await bcrypt.hash("cavalier", 8),
         "role": "Product Manager",
         "department": "Production",
         "admin": false,
