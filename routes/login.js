@@ -5,45 +5,33 @@ import { UserModel } from '../db.js'
 
 const router = express.Router()
 
+// Refactored method to follow truthy path and error if either email or password are not found/incorrect
 router.post('/', async (req, res) => {
   // Extract email and password from request body
   const { email, password } = req.body
 
   try {
-    // Find the user by email
+    // Find the user by email and compare submitted password with the user's hashed password
     const user = await UserModel.findOne({ email })
+    if (user && await bcrypt.compare(password, user.password)) {
 
-    if (!user) {
-      return res.status(404)
+        // Generate a JWT
+        const token = jwt.sign(
+            { _id: user._id.toString() },
+            process.env.SECRET_KEY,
+            { expiresIn: '7 days' } // Token expiration time - ** UPDATE to 1 hour for production **
+          )
+
+        // Send the JWT to the client
+        res.send({ token })
+      // }
+      } else {
+        res.status(401).send({message: 'Invalid credentials'})
 
     }
 
-    // Compare submitted password with the user's hashed password
-    const isMatch = await bcrypt.compare(password, user.password)
-
-    if (!isMatch) {
-      console.log('Not a match')
-      // return res.status(401).send('Invalid credentials')
-      return res.status(401)
-
-    }
-
-    // Generate a JWT
-    const token = jwt.sign(
-      { _id: user._id.toString() },
-      process.env.SECRET_KEY,
-      { expiresIn: '7 days' } // Token expiration time - ** UPDATE to 1 hour for production **
-    )
-    console.log('Token generated')
-
-    // Send the JWT to the client
-    res.send({ token })
   } catch (error) {
-    console.log('Server error')
-
-    // res.status(500).send('Server error')
-    res.status(500).send(error.message)
-
+      res.status(500).send({message: error.message})
   }
 })
 
