@@ -3,7 +3,11 @@ import { UserModel } from './db.js'
 
 const auth = async (req, res, next) => {
     try {
-        const token = req.header('Authorization').replace('Bearer ', '')
+        const authHeader = req.header('Authorization');
+        if (!authHeader) {
+            throw new Error('Authorization header is missing');
+        }
+        const token = authHeader.replace('Bearer ', '');
         const decoded = jwt.verify(token, process.env.SECRET_KEY)
         const user = await UserModel.findOne({ _id: decoded._id })
 
