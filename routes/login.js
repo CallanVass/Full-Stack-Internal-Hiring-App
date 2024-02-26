@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
 
         // Send the JWT to the client
         res.status(200).send({ token })
-        console.log(res)
+        // console.log(res)
 
       // }
       } else {
