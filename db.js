@@ -1,21 +1,29 @@
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 
+// Load .env variables
 dotenv.config()
 
 try {
+    // Attempt connection to MongoDB using .env connection string
     const m = await mongoose.connect(process.env.DB_URI)
+    // Log success and failure using a ternary operator
     console.log(m.connection.readyState === 1 ? 'MongoDB connected!' : 'MongoDB failed to connect')
 }
+// Error handling, logged to console
 catch (err) {
     console.error(err)
 }
 
+// Function to close MongoDB connection
 const closeConnection = () => {
+    // Log closure
     console.log('Mongoose disconnecting ...')
+    // Disconnect from DB
     mongoose.disconnect()
 }
 
+// Define usersSchema using Mongoose
 const usersSchema = new mongoose.Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
@@ -33,9 +41,10 @@ const usersSchema = new mongoose.Schema({
     ]
 })
 
+// Assign UserModel to usersSchema
 const UserModel = mongoose.model('User', usersSchema)
 
-
+// Define listingsSchema using Mongoose
 const listingsSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: Object, required: true }, // Includes bullet points and full text
@@ -58,12 +67,9 @@ const listingsSchema = new mongoose.Schema({
 
 })
 
+// Assign ListingModel to listingsSchema
 const ListingModel = mongoose.model('Listing', listingsSchema)
 
-// Function to push a new listing to a user's applications array
-// function addApplicationToUser (userId, listing) {
-//     return
-// }
 
-
+// Export functions and variables
 export { closeConnection, UserModel, ListingModel }
