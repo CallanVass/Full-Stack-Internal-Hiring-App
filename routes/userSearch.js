@@ -6,8 +6,8 @@ import auth from '../auth.js'
 const router = Router()
 // PATHING FOR ROUTES: http://localhost:8003/users
 
-// Get all users (AUTH REQUIRED)
-router.get('/', auth, async (req, res) => {
+// Get all users
+router.get('/', async (req, res) => {
   try {
     const users = await UserModel.find().populate('applications')
     res.status(200).send(users)
