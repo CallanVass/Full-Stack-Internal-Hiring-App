@@ -41,7 +41,18 @@ const users = [
         "department": "Production",
         "admin": false,
 
+    },
+    {
+        "firstName": "Adam",
+        "lastName": "Hunter",
+        "email": "adamh@email.com",
+        "password": await bcrypt.hash("butterfly", 8),
+        "role": "Developer",
+        "department": "IT",
+        "admin": false,
+        "aboutMe": {text: "I am a developer", careerDevelopment: "I want to be a senior developer", tags: ["Looking for a new job!","Happy where I am!","Might be willing to move!","Unsure how I feel about it!"]},
     }
+
 ]
 
 await UserModel.deleteMany()
