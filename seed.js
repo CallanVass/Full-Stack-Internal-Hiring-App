@@ -13,6 +13,7 @@ const users = [
         "department": "Human Resources",
         "image": "./misc/male_user_image.jpeg",
         "admin": true,
+        "aboutMe": {text: "I am a manager of the recruitment team", careerDevelopment: "I am keen to experience all areas of Human Rescources", tags: ["Happy where I am!","Might be willing to move!"]},
     },
     {
         "firstName": "Betty",
@@ -23,6 +24,7 @@ const users = [
         "department": "Human Resources",
         "image": "./misc/female_user_image.jpeg",
         "admin": false,
+        "aboutMe": {text: "I am a HR Specialist, looking after onboarding and training", careerDevelopment: "I aspire to be Learning and Development manager", tags: ["Looking for a new job!"]},
 
     },
     {
@@ -34,6 +36,7 @@ const users = [
         "department": "IT",
         "image": "./misc/male_user_image.jpeg",
         "admin": false,
+        "aboutMe": {text: "I am a Software Engineer, having been recently promoted from Junior Software Engineer", careerDevelopment: "My long term plan is to be Head of IT", tags: ["Happy where I am!","Might be willing to move!"]},
 
     },
     {
@@ -45,6 +48,7 @@ const users = [
         "department": "Production",
         "image": "./misc/male_user_image.jpeg",
         "admin": false,
+        "aboutMe": {text: "I am a Product Manager and I manage a team of Product Developers", careerDevelopment: "Having gained extensive experience in the overseas market, I am keen to develop my skills within the local Production team", tags: ["Happy where I am!"]},
 
     },
     {
