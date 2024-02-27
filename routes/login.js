@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
       } else {
         res.status(401).send({message: 'Invalid credentials'})
         // res.sendStatus(401).send({message: 'Invalid credentials'})
-        console.log(res)
+        // console.log(res)
         // res.send({message: 'Invalid credentials'})
 
 
@@ -40,7 +40,7 @@ router.post('/', async (req, res) => {
       res.status(500).send({message: 'Invalid credentials'})
       // res.sendStatus(500).send({message: error.message})
       // res.status(500)
-      console.log(res)
+      // console.log(res)
       return res
 
   }
