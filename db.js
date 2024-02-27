@@ -31,6 +31,7 @@ const usersSchema = new mongoose.Schema({
     password: { type: String, required: true },
     role: { type: String, required: true },
     department: { type: String , required: true },
+    image: { type: String, required: false },
     admin: { type: Boolean, default:  false },
     aboutMe: { type: Object, required: false }, // Object with key-value pairs: headline, career_goals, tags etc
     applications: [
