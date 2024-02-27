@@ -32,7 +32,7 @@ router.get('/:id', async (req, res) => {
       return res.status(404).send({error: 'Listing not found'})
     }
     // If listing exists, send it
-    res.send(listing)
+    res.status(200).send(listing)
     // Handle errors within try/catch
   } catch (error) {
     res.status(500).send(error)

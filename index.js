@@ -1,3 +1,3 @@
 import app from './app.js'
 
-app.listen(process.env.PORT || 8003)
+app.listen(process.env.PORT || 8002)
