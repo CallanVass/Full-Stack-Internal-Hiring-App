@@ -80,6 +80,77 @@ describe("GET /listings/:id route", () => {
 
 // Create a new Listing
 
+describe('POST /listings route', () => {
+    let newListingData, response
+
+    beforeAll(async () => {
+        // Mock data for creating a new listing
+        newListingData = {
+            title: "Test Listing",
+            description: {
+                bulletPoints: ["Point 1", "Point 2"],
+                fullText: "Full description of the listing."
+            },
+            department: "Engineering",
+            location: "Remote",
+            roleType: "Full-Time",
+            roleDuration: "Permanent",
+            salary: 50000,
+            datePosted: new Date(),
+            dateClosing: new Date(new Date().setDate(new Date().getDate() + 30)), // Closing date 30 days from now
+            newListing: true,
+            listingStatus: "Active",
+            // Note: 'creator' and 'applicants' fields are omitted for simplicity
+        }
+
+        // Attempt to create a new listing
+        response = await request(app).post('/listings').send(newListingData)
+    })
+
+    describe("Status Code", () => {
+        test('Responds with 201 status code for successful creation', () => {
+            expect(response.status).toBe(201)
+        })
+    })
+
+    describe("Content Type", () => {
+        test("should have a content type of application/json", () => {
+            expect(response.header['content-type']).toContain('application/json')
+        })
+    })
+
+    describe("Response Body", () => {
+        test("should have all required fields", () => {
+            const expectedProperties = ['title', 'description', 'department', 'location', 'roleType', 
+                                        'roleDuration', 'salary', 'datePosted', 'dateClosing', 'newListing', 'listingStatus']
+            expectedProperties.forEach(property => {
+                expect(response.body).toHaveProperty(property)
+            })
+            expect(Array.isArray(response.body.applicants)).toBe(true)
+        })
+
+        test("matches the mock data for all provided fields", () => {
+            expect(response.body.title).toEqual(newListingData.title)
+            expect(response.body.description).toEqual(expect.objectContaining(newListingData.description))
+            expect(response.body.department).toEqual(newListingData.department)
+            expect(response.body.location).toEqual(newListingData.location)
+            expect(response.body.roleType).toEqual(newListingData.roleType)
+            expect(response.body.roleDuration).toEqual(newListingData.roleDuration)
+            expect(response.body.salary).toEqual(newListingData.salary)
+            expect(new Date(response.body.datePosted)).toEqual(expect.any(Date))
+            expect(new Date(response.body.dateClosing)).toEqual(expect.any(Date))
+            expect(response.body.newListing).toEqual(newListingData.newListing)
+            expect(response.body.listingStatus).toEqual(newListingData.listingStatus)
+        })
+    })
+
+    afterAll(async () => {
+        // Cleanup: delete the created listing
+        if (response.body._id) {
+            await request(app).delete(`/listings/${response.body._id}`)
+        }
+    })
+})
 
 // Update a Listing
 
