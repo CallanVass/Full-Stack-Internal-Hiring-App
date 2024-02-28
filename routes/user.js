@@ -111,7 +111,7 @@ try {
         return res.status(404).send({ error: "User doesn't exist" })
     }
     // Send user for deletion
-    res.sendStatus(204).send(user)
+    res.status(204).send(user)
 // Handle errors within try/catch  
 } catch (error) {
     res.status(500).send(error)
