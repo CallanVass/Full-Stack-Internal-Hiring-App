@@ -80,10 +80,11 @@ router.delete('/:id', async (req, res) => {
     const deletedListing = await ListingModel.findByIdAndDelete(req.params.id)
     // If deletion is successful, send back successful status
     if (deletedListing) {
-      res.sendStatus(204)
-    // Else handle error of missting listing
+        // Changed to 200 so message can be received after deletion
+        res.status(200).send({ message: "listing successfully deleted"})
+    // Else handle error of missing listing
     } else {
-      res.status(404).send({error: 'Listing not found'})
+        res.status(404).send({error: 'Listing not found'})
     }
     // Handle errors within try/catch
   } catch (error) {
