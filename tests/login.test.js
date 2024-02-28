@@ -5,8 +5,8 @@ describe('POST /login route', () => {
     // Test user
     const testCredentials = {
         // MUST be seeded, accurate user login details
-        email: 'adam@email.com', 
-        password: 'fishing' 
+        email: 'betty@email.com', 
+        password: 'castle' 
     }
 
     test('Successful authentication returns a token', async () => {
