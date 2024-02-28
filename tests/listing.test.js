@@ -45,7 +45,7 @@ describe("GET /listings route", () => {
 // GET One Listing
 describe("GET /listings/:id route", () => {
     let response
-    let userId = "65de6f9ee3ea525825c2c28f" // CHANGE FOR CURRENT LISTING ID
+    let userId = "65dec2d025959bced7b240a2" // CHANGE FOR CURRENT LISTING ID
 
     beforeAll(async () => {
         response = await request(app).get(`/listings/${userId}`)
