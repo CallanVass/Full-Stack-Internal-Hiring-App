@@ -20,18 +20,14 @@ router.post('/', async (req, res) => {
             { _id: user._id.toString() },
             process.env.SECRET_KEY,
             { expiresIn: '7 days' } // Token expiration time - ** UPDATE to 1 hour for production **
-          )
+        )
 
         // Send the JWT to the client
         res.status(200).send({ token })
-        // console.log(res)
+    
+        } else {
+            res.status(401).send({message: 'Invalid credentials'})
 
-      // }
-      } else {
-        res.status(401).send({message: 'Invalid credentials'})
-        // res.sendStatus(401).send({message: 'Invalid credentials'})
-        // console.log(res)
-        // res.send({message: 'Invalid credentials'})
 
 
     }

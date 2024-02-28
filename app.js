@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import userRoutes from './routes/userSearch.js'
+import userRoutes from './routes/user.js'
 import listingRoutes from './routes/listing.js'
 import loginRoutes from './routes/login.js'
 
