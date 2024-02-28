@@ -7,7 +7,7 @@ const router = Router()
 // PATHING FOR ROUTES: http://localhost:8003/users
 
 // Get all users
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
 try {
     // Query to find all users
     const users = await UserModel.find().populate('applications')

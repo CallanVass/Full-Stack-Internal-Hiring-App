@@ -15,7 +15,7 @@ describe('GET /users', () => {
         // Make the authenticated request to get all users
         response = await request(app)
             .get('/users')
-            .set('Authorization', `Bearer ${token}`) // Include the token in the Authorization header
+            .set('Authorization', `Bearer ${token}`)
     })
 
     test('should return a 200 status for a successful request', () => {
@@ -40,7 +40,7 @@ describe('GET /users', () => {
 describe('GET /users/:id', () => {
     let response
     // MUST be with seeded userId
-    const userId = "65dec2d025959bced7b2409c" 
+    const userId = "65dfac0ce95d4b133c52e1a8" 
     let token
 
     beforeAll(async () => {
@@ -116,8 +116,9 @@ describe('POST /users', () => {
             // Ensure the deletion request is also authenticated if necessary
             await request(app)
                 .delete(`/users/${createdUserId}`)
+                .set('Authorization', `Bearer ${token}`)
         }
-    })
+    }) 
 })
 
 // Update a User
