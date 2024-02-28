@@ -3,11 +3,21 @@ import request from 'supertest'
 
 // GET All Listings
 describe("GET /listings route", () => {
-    let response
+    let response, token
   
-    // Fetch the listings before running the tests
+    // Fetch the listings and log in before running the tests
     beforeAll(async () => {
-      response = await request(app).get('/listings')
+        // Step 1: Log in to get the token
+        const loginResponse = await request(app).post('/login').send({
+            email: 'betty@email.com', 
+            password: 'castle' 
+        })
+        token = loginResponse.body.token 
+
+        // Step 2: Use the token to make an authenticated request to fetch listings
+        response = await request(app)
+            .get('/listings')
+            .set('Authorization', `Bearer ${token}`) 
     })
   
     describe("Status Code", () => {
@@ -42,13 +52,22 @@ describe("GET /listings route", () => {
 })
 
 
-// GET One Listing
 describe("GET /listings/:id route", () => {
-    let response
-    let userId = "65dec2d025959bced7b240a2" // CHANGE FOR CURRENT LISTING ID
+    let response, token
+    let listingId = "65dfac0ce95d4b133c52e1ae"
 
     beforeAll(async () => {
-        response = await request(app).get(`/listings/${userId}`)
+        // Log in as route is Auth protected
+        const loginResponse = await request(app).post('/login').send({
+            email: 'betty@email.com', 
+            password: 'castle'
+        })
+
+        token = loginResponse.body.token 
+        // Make the authenticated request to the protected route
+        response = await request(app)
+            .get(`/listings/${listingId}`)
+            .set('Authorization', `Bearer ${token}`) 
     })
 
     describe("Status Code", () => {
@@ -65,7 +84,7 @@ describe("GET /listings/:id route", () => {
 
     describe("Response Body", () => {
         test("should return a listing object", () => {
-            expect(response.body).toBeInstanceOf(Object)
+            expect(typeof response.body).toBe('object')
         })
 
         test("listing should have essential properties", () => {
@@ -81,7 +100,7 @@ describe("GET /listings/:id route", () => {
 
 // Create a new Listing
 describe('POST /listings route', () => {
-    let newListingData, response
+    let newListingData, response, token
 
     beforeAll(async () => {
         // Mock data for creating a new listing
@@ -97,14 +116,24 @@ describe('POST /listings route', () => {
             roleDuration: "Permanent",
             salary: 50000,
             datePosted: new Date(),
-            dateClosing: new Date(new Date().setDate(new Date().getDate() + 30)), // Closing date 30 days from now
+            dateClosing: new Date(new Date().setDate(new Date().getDate() + 30)), 
             newListing: true,
             listingStatus: "Active",
-            // Note: 'creator' and 'applicants' fields are omitted for simplicity
         }
 
-        // Attempt to create a new listing
-        response = await request(app).post('/listings').send(newListingData)
+        // Log in as route is Auth protected
+        const loginResponse = await request(app).post('/login').send({
+            email: 'betty@email.com', 
+            password: 'castle' 
+        })
+
+        token = loginResponse.body.token 
+
+        // Create new listing
+        response = await request(app)
+            .post('/listings')
+            .set('Authorization', `Bearer ${token}`)
+            .send(newListingData)
     })
 
     describe("Status Code", () => {
@@ -145,9 +174,11 @@ describe('POST /listings route', () => {
     })
 
     afterAll(async () => {
-        // Cleanup: delete the created listing
+        // Delete entry
         if (response.body._id) {
-            await request(app).delete(`/listings/${response.body._id}`)
+            await request(app)
+                .delete(`/listings/${response.body._id}`)
+                .set('Authorization', `Bearer ${token}`)
         }
     })
 })
@@ -155,10 +186,17 @@ describe('POST /listings route', () => {
 
 // Update a Listing
 describe('PUT /listings/:id route', () => {
-    let originalListingData, updatedListingData, listingId, response
+    let originalListingData, updatedListingData, listingId, response, token
 
     beforeAll(async () => {
-        // Mock data for creating a new listing to update
+        // Log in to auth protected route
+        const loginResponse = await request(app).post('/login').send({
+            email: 'betty@email.com', 
+            password: 'castle' 
+        })
+        token = loginResponse.body.token 
+
+        // Mock data for creating a new listing
         originalListingData = {
             title: "Original Listing",
             description: {
@@ -171,13 +209,17 @@ describe('PUT /listings/:id route', () => {
             roleDuration: "Temporary",
             salary: 30000,
             datePosted: new Date(),
-            dateClosing: new Date(new Date().setDate(new Date().getDate() + 15)), // Closing date 15 days from now
+            dateClosing: new Date(new Date().setDate(new Date().getDate() + 15)), 
             newListing: true,
             listingStatus: "Active",
         }
 
         // Create a new listing to update
-        const createResponse = await request(app).post('/listings').send(originalListingData)
+        const createResponse = await request(app)
+            .post('/listings')
+            .set('Authorization', `Bearer ${token}`)
+            .send(originalListingData)
+
         listingId = createResponse.body._id
 
         // Data to update the listing with
@@ -197,8 +239,11 @@ describe('PUT /listings/:id route', () => {
             listingStatus: "Inactive", 
         }
 
-        // Attempt to update the listing
-        response = await request(app).put(`/listings/${listingId}`).send(updatedListingData)
+        // Update the listing
+        response = await request(app)
+            .put(`/listings/${listingId}`)
+            .set('Authorization', `Bearer ${token}`)
+            .send(updatedListingData)
     })
 
     describe("Status Code", () => {
@@ -237,7 +282,9 @@ describe('PUT /listings/:id route', () => {
     afterAll(async () => {
         // Delete the listing that was updated
         if (listingId) {
-            await request(app).delete(`/listings/${listingId}`)
+            await request(app)
+                .delete(`/listings/${listingId}`)
+                .set('Authorization', `Bearer ${token}`)
         }
     })
 })
@@ -245,10 +292,10 @@ describe('PUT /listings/:id route', () => {
 
 // Delete a Listing
 describe('DELETE /listings/:id route', () => {
-    let listingData, listingId, response
+    let listingData, listingId, response, token
 
     beforeAll(async () => {
-        // Mock data for creating a new listing to delete
+        // Mock data for creating a new listing
         listingData = {
             title: "Listing to Delete",
             description: {
@@ -261,17 +308,29 @@ describe('DELETE /listings/:id route', () => {
             roleDuration: "Contract",
             salary: 20000,
             datePosted: new Date(),
-            dateClosing: new Date(new Date().setDate(new Date().getDate() + 10)), // Closing date 10 days from now
+            dateClosing: new Date(new Date().setDate(new Date().getDate() + 10)),
             newListing: true,
             listingStatus: "Active",
         }
 
-        // Create a new listing to delete
-        const createResponse = await request(app).post('/listings').send(listingData)
+        // Log in 
+        const loginResponse = await request(app).post('/login').send({
+            email: 'betty@email.com', 
+            password: 'castle'
+        })
+        token = loginResponse.body.token 
+
+        // Create new listing to delete
+        const createResponse = await request(app)
+            .post('/listings')
+            .set('Authorization', `Bearer ${token}`)
+            .send(listingData)
         listingId = createResponse.body._id
 
-        // Attempt to delete the listing
-        response = await request(app).delete(`/listings/${listingId}`)
+        // Delete the listing
+        response = await request(app)
+            .delete(`/listings/${listingId}`)
+            .set('Authorization', `Bearer ${token}`)
     })
 
     describe("Status Code", () => {

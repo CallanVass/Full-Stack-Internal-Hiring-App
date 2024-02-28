@@ -1,12 +1,13 @@
 import { Router } from "express"
 import { ListingModel } from '../db.js'
+import auth from '../auth.js'
 
 // Initialize new router instance
 const router = Router()
 // PATHING FOR ROUTES: http://localhost:8003/listings
 
 // Get all listings
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
     // Query DB for listings, populating applicants and creator within
     const listings = await ListingModel.find().populate('applicants').populate('creator')
@@ -23,7 +24,7 @@ router.get('/', async (req, res) => {
 })
 
 // Get a single listing by ID
-router.get('/:id', async (req, res) => {
+router.get('/:id', auth, async (req, res) => {
   try {
     // Query DB for a listing, populating applicants and creator within
     const listing = await ListingModel.findById(req.params.id).populate('applicants').populate('creator')
@@ -40,7 +41,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // Create new listing
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   try {
     // Create new listing in the DB using the request body
     const newListing = await (await ListingModel.create(req.body)).populate('creator')
@@ -53,7 +54,7 @@ router.post('/', async (req, res) => {
 })
 
 // Update a listing by ID using PUT
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
   try {
     // Creator not required as this is not amendable
     // Update the listing of the specified request id
@@ -73,7 +74,7 @@ router.put('/:id', async (req, res) => {
 
 
 // Delete a listing by ID
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
   try {
     // Creator not required as this is not amendable
     // Delete listing of the specified request id
