@@ -1,6 +1,7 @@
 import { Router } from "express"
 import { ListingModel } from '../db.js'
 import auth from '../auth.js'
+import adminAuth from "../admin.js"
 
 // Initialize new router instance
 const router = Router()
@@ -41,7 +42,7 @@ router.get('/:id', auth, async (req, res) => {
 })
 
 // Create new listing
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, adminAuth, async (req, res) => {
   try {
     // Create new listing in the DB using the request body
     const newListing = await (await ListingModel.create(req.body)).populate('creator')
@@ -54,7 +55,7 @@ router.post('/', auth, async (req, res) => {
 })
 
 // Update a listing by ID using PUT
-router.put('/:id', auth, async (req, res) => {
+router.put('/:id', auth, adminAuth, async (req, res) => {
   try {
     // Creator not required as this is not amendable
     // Update the listing of the specified request id
@@ -74,7 +75,7 @@ router.put('/:id', auth, async (req, res) => {
 
 
 // Delete a listing by ID
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', auth, adminAuth, async (req, res) => {
   try {
     // Creator not required as this is not amendable
     // Delete listing of the specified request id

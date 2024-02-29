@@ -2,6 +2,7 @@ import { Router } from "express"
 import bcrypt from 'bcrypt'
 import { UserModel } from '../db.js'
 import auth from '../auth.js'
+import adminAuth from "../admin.js"
 
 const router = Router()
 // PATHING FOR ROUTES: http://localhost:8003/users
@@ -42,7 +43,7 @@ try {
 
 
 // Create a new user (AUTH REQUIRED)
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, adminAuth, async (req, res) => {
 try {
     // Hash the password with bcrypt
     const hashedPassword = await bcrypt.hash(req.body.password, 8)
@@ -102,7 +103,7 @@ try {
 })
 
 // Delete a user by ID (AUTH REQUIRED)
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', auth, adminAuth, async (req, res) => {
 try {
     // Find user by request parameters
     const user = await UserModel.findByIdAndDelete(req.params.id)
