@@ -56,8 +56,7 @@ const listingsSchema = new mongoose.Schema({
     salary: { type: Number, required: true },
     datePosted: { type: Date, required: true },
     dateClosing: { type: Date, required: true },
-    newListing: { type: Boolean, required: true, default: true},
-    listingStatus: { type: String, required: true, default: 'Active'}, // Active, Inactive, Closed, Filled
+    listingStatus: { type: String, required: true, default: 'Active'},
     applicants: [
         {
             type: mongoose.ObjectId,
