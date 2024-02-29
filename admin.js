@@ -3,6 +3,7 @@ import { UserModel } from './db.js'
 
 const adminAuth = async (req, res, next) => {
     try {
+        // Complete auth check
         const authHeader = req.header('Authorization')
         if (!authHeader) {
             throw new Error('Authorization header is missing')
@@ -15,8 +16,8 @@ const adminAuth = async (req, res, next) => {
         if (!user) {
             throw new Error('User not found')
         }
-
-        if (user.isAdmin === false) {
+        // If not admin, throw error
+        if (!user.admin) {
             throw new Error('Access denied. Admin privileges required.')
         }
 
