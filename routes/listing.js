@@ -2,6 +2,7 @@ import { Router } from "express"
 import { ListingModel } from '../db.js'
 import auth from '../auth.js'
 import adminAuth from "../admin.js"
+import moment from "moment"
 
 // Initialize new router instance
 const router = Router()
@@ -9,37 +10,58 @@ const router = Router()
 
 // Get all listings
 router.get('/', auth, async (req, res) => {
-  try {
-    // Query DB for listings, populating applicants and creator within
-    const listings = await ListingModel.find().populate('applicants').populate('creator')
-    // If there are no listings, return an error
-    if (!listings) {
-        return res.status(404).send({error: 'No listings found'})
+    try {
+      // Query DB for listings, populating applicants and creator within
+      let listings = await ListingModel.find().populate('applicants').populate('creator');
+  
+      // If there are no listings, return an error
+      if (!listings.length) {
+          return res.status(404).send({error: 'No listings found'});
+      }
+  
+      // Format dates for each listing
+      listings = listings.map(listing => {
+        const formattedListing = {
+          ...listing.toObject(), 
+          datePosted: listing.datePosted ? moment(listing.datePosted).format('DD/MM/YYYY') : '',
+          dateClosing: listing.dateClosing ? moment(listing.dateClosing).format('DD/MM/YYYY') : '',
+        };
+        return formattedListing;
+      });
+  
+      // If there are listings, send them
+      res.status(200).send(listings);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error);
     }
-    // If there are listings, send them
-    res.status(200).send(listings)
-    // Handle errors within try/catch
-  } catch (error) {
-    res.status(500).send(error)
-  }
-})
+  })
 
 // Get a single listing by ID
 router.get('/:id', auth, async (req, res) => {
-  try {
-    // Query DB for a listing, populating applicants and creator within
-    const listing = await ListingModel.findById(req.params.id).populate('applicants').populate('creator')
-    // If it doesn't exist, return an error
-    if (!listing) {
-      return res.status(404).send({error: 'Listing not found'})
+    try {
+      // Query DB for a listing, populating applicants and creator within
+      const listing = await ListingModel.findById(req.params.id).populate('applicants').populate('creator');
+  
+      // If it doesn't exist, return an error
+      if (!listing) {
+        return res.status(404).send({error: 'Listing not found'});
+      }
+  
+      // Convert Mongoose document to a plain JavaScript object and format dates
+      const formattedListing = {
+        ...listing.toObject(),
+        datePosted: listing.datePosted ? moment(listing.datePosted).format('DD/MM/YYYY') : '',
+        dateClosing: listing.dateClosing ? moment(listing.dateClosing).format('DD/MM/YYYY') : '',
+      };
+  
+      // If listing exists, send the formatted listing
+      res.status(200).send(formattedListing);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error);
     }
-    // If listing exists, send it
-    res.status(200).send(listing)
-    // Handle errors within try/catch
-  } catch (error) {
-    res.status(500).send(error)
-  }
-})
+  })
 
 // Create new listing
 router.post('/', auth, adminAuth, async (req, res) => {
