@@ -9,8 +9,8 @@ describe("GET /listings route", () => {
     beforeAll(async () => {
         // Step 1: Log in to get the token
         const loginResponse = await request(app).post('/login').send({
-            email: 'betty@email.com', 
-            password: 'castle' 
+            email: 'adam@email.com', 
+            password: 'fishing' 
         })
         token = loginResponse.body.token 
 
@@ -43,7 +43,7 @@ describe("GET /listings route", () => {
   
       test("each listing should have essential properties", () => {
         const properties = ['title', 'description', 'department', 'location', 'roleType', 
-        'roleDuration', 'salary', 'datePosted', 'dateClosing', 'newListing', 'listingStatus', 'applicants']
+        'roleDuration', 'salary', 'datePosted', 'dateClosing', 'listingStatus', 'applicants']
         properties.forEach(property => {
             expect(response.body[0]).toHaveProperty(property)
         })
@@ -54,13 +54,13 @@ describe("GET /listings route", () => {
 
 describe("GET /listings/:id route", () => {
     let response, token
-    let listingId = "65dfac0ce95d4b133c52e1ae"
+    let listingId = "65dfac0ce95d4b133c52e1af"
 
     beforeAll(async () => {
         // Log in as route is Auth protected
         const loginResponse = await request(app).post('/login').send({
-            email: 'betty@email.com', 
-            password: 'castle'
+            email: 'adam@email.com', 
+            password: 'fishing'
         })
 
         token = loginResponse.body.token 
@@ -89,7 +89,7 @@ describe("GET /listings/:id route", () => {
 
         test("listing should have essential properties", () => {
             const properties = ['title', 'description', 'department', 'location', 'roleType', 
-            'roleDuration', 'salary', 'datePosted', 'dateClosing', 'newListing', 'listingStatus', 'applicants']
+            'roleDuration', 'salary', 'datePosted', 'dateClosing', 'listingStatus', 'applicants']
             properties.forEach(property => {
                 expect(response.body).toHaveProperty(property)
             })
@@ -117,14 +117,13 @@ describe('POST /listings route', () => {
             salary: 50000,
             datePosted: new Date(),
             dateClosing: new Date(new Date().setDate(new Date().getDate() + 30)), 
-            newListing: true,
             listingStatus: "Active",
         }
 
         // Log in as route is Auth protected
         const loginResponse = await request(app).post('/login').send({
-            email: 'betty@email.com', 
-            password: 'castle' 
+            email: 'adam@email.com', 
+            password: 'fishing' 
         })
 
         token = loginResponse.body.token 
@@ -151,7 +150,7 @@ describe('POST /listings route', () => {
     describe("Response Body", () => {
         test("should have all required fields", () => {
             const expectedProperties = ['title', 'description', 'department', 'location', 'roleType', 
-                                        'roleDuration', 'salary', 'datePosted', 'dateClosing', 'newListing', 'listingStatus']
+                                        'roleDuration', 'salary', 'datePosted', 'dateClosing', 'listingStatus']
             expectedProperties.forEach(property => {
                 expect(response.body).toHaveProperty(property)
             })
@@ -168,7 +167,6 @@ describe('POST /listings route', () => {
             expect(response.body.salary).toEqual(newListingData.salary)
             expect(new Date(response.body.datePosted)).toEqual(expect.any(Date))
             expect(new Date(response.body.dateClosing)).toEqual(expect.any(Date))
-            expect(response.body.newListing).toEqual(newListingData.newListing)
             expect(response.body.listingStatus).toEqual(newListingData.listingStatus)
         })
     })
@@ -191,8 +189,8 @@ describe('PUT /listings/:id route', () => {
     beforeAll(async () => {
         // Log in to auth protected route
         const loginResponse = await request(app).post('/login').send({
-            email: 'betty@email.com', 
-            password: 'castle' 
+            email: 'adam@email.com', 
+            password: 'fishing' 
         })
         token = loginResponse.body.token 
 
@@ -261,7 +259,7 @@ describe('PUT /listings/:id route', () => {
     describe("Response Body", () => {
         test("should have all updated fields", () => {
             const expectedProperties = ['title', 'description', 'department', 'location', 'roleType',
-                                        'roleDuration', 'salary', 'datePosted', 'dateClosing', 'newListing', 'listingStatus']
+                                        'roleDuration', 'salary', 'datePosted', 'dateClosing', 'listingStatus']
             expectedProperties.forEach(property => {
                 expect(response.body).toHaveProperty(property)
             })
@@ -274,7 +272,6 @@ describe('PUT /listings/:id route', () => {
             expect(response.body.roleDuration).toEqual(updatedListingData.roleDuration)
             expect(response.body.salary).toEqual(updatedListingData.salary)
             expect(new Date(response.body.dateClosing)).toEqual(expect.any(Date))
-            expect(response.body.newListing).toEqual(updatedListingData.newListing)
             expect(response.body.listingStatus).toEqual(updatedListingData.listingStatus)
         })
     })
@@ -315,8 +312,8 @@ describe('DELETE /listings/:id route', () => {
 
         // Log in 
         const loginResponse = await request(app).post('/login').send({
-            email: 'betty@email.com', 
-            password: 'castle'
+            email: 'adam@email.com', 
+            password: 'fishing'
         })
         token = loginResponse.body.token 
 
