@@ -7,8 +7,8 @@ describe('GET /users', () => {
     beforeAll(async () => {
         // Log in to obtain an authentication token
         const loginResponse = await request(app).post('/login').send({
-            email: 'betty@email.com', 
-            password: 'castle' 
+            email: 'adam@email.com', 
+            password: 'fishing' 
         })
         token = loginResponse.body.token // Store the token
 
@@ -40,14 +40,14 @@ describe('GET /users', () => {
 describe('GET /users/:id', () => {
     let response
     // MUST be with seeded userId
-    const userId = "65dfac0ce95d4b133c52e1a8" 
+    const userId = "65dfac0ce95d4b133c52e1a9" 
     let token
 
     beforeAll(async () => {
         // Log in as route is Auth protected
         const loginResponse = await request(app).post('/login').send({
-            email: 'betty@email.com', 
-            password: 'castle' 
+            email: 'adam@email.com', 
+            password: 'fishing' 
         })
 
         token = loginResponse.body.token 
@@ -87,8 +87,8 @@ describe('POST /users', () => {
 
         // Log in to auth-protected route
         const loginResponse = await request(app).post('/login').send({
-            email: 'betty@email.com', 
-            password: 'castle' 
+            email: 'adam@email.com', 
+            password: 'fishing' 
         })
 
         // Token for Auth requests
@@ -128,8 +128,8 @@ describe('PUT /users', () => {
     beforeAll(async () => {
         // Log in to obtain an authentication token
         const loginResponse = await request(app).post('/login').send({
-            email: 'betty@email.com', 
-            password: 'castle' 
+            email: 'adam@email.com', 
+            password: 'fishing' 
         })
 
         token = loginResponse.body.token
@@ -203,8 +203,8 @@ describe('DELETE /users/:id', () => {
     beforeAll(async () => {
         // Log in to obtain an authentication token
         const loginResponse = await request(app).post('/login').send({
-            email: 'betty@email.com', 
-            password: 'castle' 
+            email: 'adam@email.com', 
+            password: 'fishing' 
         })
 
         token = loginResponse.body.token
