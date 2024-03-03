@@ -9,8 +9,8 @@ const app = express()
 
 // Middleware
 
-// Open CORS for development (CHANGE BEFORE DEPLOYMENT)
-app.use(cors())
+// Open CORS for development (COMMENT OUT BEFORE DEPLOYMENT)
+// app.use(cors())
 
 // Parse JSON requests for req.body
 app.use(express.json())

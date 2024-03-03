@@ -77,7 +77,7 @@ router.post('/', auth, adminAuth, async (req, res) => {
 })
 
 // Update a listing by ID using PUT
-router.put('/:id', auth, adminAuth, async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
   try {
     // Creator not required as this is not amendable
     // Update the listing of the specified request id
