@@ -62,11 +62,11 @@ const users = [
 
 // Delete all documents in collection related to UserModel
 await UserModel.deleteMany()
-console.log('Deleted users')
+
 
 // Insert user documents into collection using previously defined array (users)
 const db_users = await UserModel.insertMany(users)
-console.log('Added users')
+
 
 // Array of listings for data seeding
 const listings = [
@@ -137,15 +137,15 @@ const listings = [
 ]
 // Delete all documents in collection related to ListingModel
 await ListingModel.deleteMany()
-console.log('Deleted listings')
+
 
 // Insert listing documents into collection using previously defined array (listings)
 await ListingModel.insertMany(listings)
-console.log('Added users')
+
 
 // Log both listings and users to console
-console.log(listings)
-console.log(db_users)
+
+
 
 // Manually close connection to database when finished seeding
 closeConnection()
