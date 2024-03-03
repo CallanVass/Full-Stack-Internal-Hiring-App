@@ -54,7 +54,7 @@ describe("GET /listings route", () => {
 
 describe("GET /listings/:id route", () => {
     let response, token
-    let listingId = "65dfac0ce95d4b133c52e1af"
+    let listingId = "65e40f4073a77c18cd0bb653"
 
     beforeAll(async () => {
         // Log in as route is Auth protected

@@ -40,7 +40,7 @@ describe('GET /users', () => {
 describe('GET /users/:id', () => {
     let response
     // MUST be with seeded userId
-    const userId = "65dfac0ce95d4b133c52e1a9" 
+    const userId = "65e40f3f73a77c18cd0bb64c"
     let token
 
     beforeAll(async () => {

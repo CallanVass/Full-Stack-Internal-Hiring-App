@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
         const token = jwt.sign(
             { _id: user._id.toString() },
             process.env.SECRET_KEY,
-            { expiresIn: '7 days' } // Token expiration time - ** UPDATE to 1 hour for production **
+            { expiresIn: '1 hour' } // Token expiry time
         )
 
         // Send the JWT to the client
