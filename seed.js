@@ -11,7 +11,6 @@ const users = [
         "password": await bcrypt.hash("fishing", 8),
         "role": "Recruitment Manager",
         "department": "Human Resources",
-        "image": "./misc/male_user_image.jpeg",
         "admin": true,
         "aboutMe": {text: "I am a manager of the recruitment team", careerDevelopment: "I am keen to experience all areas of Human Rescources", tags: ["Happy where I am!","Might be willing to move!"]},
     },
@@ -22,7 +21,6 @@ const users = [
         "password": await bcrypt.hash("castle", 8),
         "role": "HR Specialist",
         "department": "Human Resources",
-        "image": "./misc/female_user_image.jpeg",
         "admin": false,
         "aboutMe": {text: "I am a HR Specialist, looking after onboarding and training", careerDevelopment: "I aspire to be Learning and Development manager", tags: ["Looking for a new job!"]},
 
@@ -34,7 +32,6 @@ const users = [
         "password": await bcrypt.hash("empire", 8),
         "role": "Software Engineer",
         "department": "IT",
-        "image": "./misc/male_user_image.jpeg",
         "admin": false,
         "aboutMe": {text: "I am a Software Engineer, having been recently promoted from Junior Software Engineer", careerDevelopment: "My long term plan is to be Head of IT", tags: ["Happy where I am!","Might be willing to move!"]},
 
@@ -46,7 +43,6 @@ const users = [
         "password": await bcrypt.hash("cavalier", 8),
         "role": "Product Manager",
         "department": "Production",
-        "image": "./misc/male_user_image.jpeg",
         "admin": false,
         "aboutMe": {text: "I am a Product Manager and I manage a team of Product Developers", careerDevelopment: "Having gained extensive experience in the overseas market, I am keen to develop my skills within the local Production team", tags: ["Happy where I am!"]},
 
@@ -58,7 +54,6 @@ const users = [
         "password": await bcrypt.hash("butterfly", 8),
         "role": "Developer",
         "department": "IT",
-        "image": "./misc/male_user_image.jpeg",
         "admin": false,
         "aboutMe": {text: "I am a developer", careerDevelopment: "I want to be a senior developer", tags: ["Looking for a new job!","Happy where I am!","Might be willing to move!","Unsure how I feel about it!"]},
     }
