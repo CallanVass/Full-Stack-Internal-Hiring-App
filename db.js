@@ -8,7 +8,7 @@ try {
     // Attempt connection to MongoDB using .env connection string
     const m = await mongoose.connect(process.env.DB_URI)
     // Log success and failure using a ternary operator
-    console.log(m.connection.readyState === 1 ? 'MongoDB connected!' : 'MongoDB failed to connect')
+
 }
 // Error handling, logged to console
 catch (err) {
@@ -18,7 +18,7 @@ catch (err) {
 // Function to close MongoDB connection
 const closeConnection = () => {
     // Log closure
-    console.log('Mongoose disconnecting ...')
+
     // Disconnect from DB
     mongoose.disconnect()
 }
